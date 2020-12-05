@@ -13,7 +13,10 @@ import videoRouter from "./routers/videoRouter";
 
 const app = express();
 
-// 아래의 모든 request에 대해 midleware 설정 (globaly)
+// express 설정
+app.set("view engine", "pug");
+// midleware 설정
+// 아래의 모든 request에 대해 적용 (globaly)
 // routing보다 위에 있어야 작동 됨
 app.use(cookieParser());
 app.use(bodyParser.json()); // 서버가 json를 이해
