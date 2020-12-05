@@ -6,17 +6,12 @@ import morgan from "morgan";                // midleware 프로그램
 import helmet from "helmet";                // 보안을 위한 프로그램
 import bodyParser from "body-parser";       // request 안의 data 접근을 위한 프로그램
 import cookieParser from "cookie-parser";   // cookie에 user data 저장을 위한 프로그램 
+import { userRouter } from "./router";      // router 파일에서 객체를 import
 
 const app = express();
-const PORT = 4000;
-
-const handleListening = () => console.log(`Listening on: http://localhost: ${PORT}`);
 
 const handleHome = (req, res) => res.send("Hello frome home!");
 const handleProfile = (req, res) => res.send("You are on my profile");
-
-// PORT 접근에 대해 routing
-app.listen(PORT, handleListening);
 
 // 아래의 모든 request에 대해 midleware 설정 (globaly)
 // routing보다 위에 있어야 작동 됨
@@ -29,3 +24,6 @@ app.use(morgan("dev"));
 // get request에 대해 routing
 app.get("/", handleHome);
 app.get("/profile", handleProfile);
+app.use("/user", userRouter);   // userRouter 객체 전부를 use한다는 의미
+
+export default app; // export default -> import {}(x) name(o)
