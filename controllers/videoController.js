@@ -4,7 +4,13 @@
 // home.pug에서 전달받은 파라미터를 #{pageTitle} 같이 사용할 수 있음
 // page별로 같은 곳에 다른 변수를 사용해야할 경우, 이와같이 동일한 변수에 다른 value를 담아 전달
 export const home = (req, res) => res.render("home", {pageTitle: "Home"});
-export const search = (req, res) => res.render("search", {pageTitle: "Search"});
+export const search = (req, res) => {
+    // const searchingBy = req.query.term;
+    // {searchingBy: searchingBy}
+    // ES6방식으로 아래와 같이 표현
+    const {query: {term: searchingBy}} = req;
+    res.render("search", {pageTitle: "Search", searchingBy});
+}
 
 // videoRouter
 export const videos = (req, res) => res.render("videos", {pageTitle: "Videos"});

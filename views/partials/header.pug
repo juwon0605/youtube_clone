@@ -3,6 +3,13 @@ header.header
         a(href=routes.home) 
             i.fab.fa-youtube
     .header__column
+        //- get 방식으로 search/term="입력한 값"으로 서버에 request
+        //- get 방식이어야 URL에 query로 "입력한 값"이 추가
+        //- videoController의 search에서 query에 접근해 term을 변수로 저장하고 render()에 파라미터로 전달
+        form(action=routes.search, method="get") 
+            input(type="text", placeholder="Search by term..." name="term")
+            
+    .header__column
         ul
             li
                 a(href=routes.join) Join
