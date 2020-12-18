@@ -32,6 +32,23 @@ app.use(routes.videos, videoRouter);
 export default app; // export default -> import {}(x) name(o)
 
 // ---------------------------------------------------------------------------------------
+// 동작 원리  
+/*
+package.json        : cmd에 서버 실행 명령어 설정 
+routes.js           : response 텍스트들을 변수로 설정
+app.js              : 서버 생성
+                      각종 middleware 세팅
+                      view egine을 pug로 set()
+                      1차 분류 해당 router들을 import
+                      response를 1차 분류해서 routing
+globalRouter.js     : 1차 분류 해당 controller들을 import
+                      response를 2차 분류해서 해당 controller 함수 routing
+videoController.js  : 해당 함수에서 render()가 view engine 확장자의 파일명(.pug) "home"을 탐색
+home.pug            : extends layouts/main을 하면 home을 포함하여 main.pug를 request함
+main.pug            : main.pug의 block content 부분을 home.pug의 block content로 채워서 request함
+*/
+
+// ---------------------------------------------------------------------------------------
 // 이론적 지식 설명  
 /*
 M(Model)    : data
