@@ -4,7 +4,7 @@ import { deleteVideo, editVideo, upload, videoDetail, videos } from "../controll
 
 const videoRouter = express.Router(); // export -> import {}(o) name(x);
 
-videoRouter.get(routes.videos, videos);
+// videoRouter.get(routes.videos, videos);
 videoRouter.get(routes.upload, upload);
 videoRouter.get(routes.videoDetail, videoDetail);
 videoRouter.get(routes.editVideo, editVideo);

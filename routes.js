@@ -20,15 +20,18 @@ const DELETE_VIDEO = "/:id/delete";
 
 // Object
 const routes = {
+    //globalRouter
     home: HOME,
     join: JOIN,
     login: LOGIN,
     logout: LOGOUT,
     search: SEARCH,
+    //userRouter
     users: USERS,
     userDetail: USER_DETAIL,
     editProfile: EDIT_PROFILE,
     changePassword: CHANGE_PASSWORD,
+    //videoRouter
     videos: VIDEOS,
     upload: UPLOAD,
     videoDetail: VIDEO_DETAIL,

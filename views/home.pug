@@ -1,10 +1,14 @@
-extends layouts/main    
+extends layouts/main
 //- (videoController) render()가 view engine 확장자의 파일명(.pug) "home"을 탐색
 //- extends layouts/main을 하면 home을 포함하여 main.pug를 request함
 //- main.pug의 block content 부분을 home.pug의 block content로 채워서 request함
+include mixins/videoBlock
 
 block content
      .videos
           each item in videos
-            h1= item.title
-            p= item.description 
+            +videoBlock({
+                 title: item.title,
+                 views: item.views,
+                 videoFile:item.videoFile
+            })

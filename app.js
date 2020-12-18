@@ -21,12 +21,18 @@ app.use(helmet());
 // express 설정
 app.set("view engine", "pug");
 app.use(cookieParser());
-app.use(bodyParser.json()); // 서버가 json를 이해
+app.use(bodyParser.json()); // 서버가 json를 이해, 없으면 req.body 같은 코드 사용x
 app.use(bodyParser.urlencoded({ extended:true }));  // 서버가 urlencoded를 이해
 app.use(morgan("dev"));
 // local(탬플릿-pug 등)에 global변수(최상위 파일-app 등)를 사용하도록 만들어주는 함수 생성
 // routing과정에 middleware에 포함
 app.use(localsMiddleware);
+
+// db.js 샘플 비디오 안나오는 것 오류 해결 코드 (보안 설정 변경)
+app.use(function(req, res, next) {
+    res.setHeader("Content-Security-Policy", "script-src 'self' https://archive.org");
+    return next();
+    });
 
 // request에 대해 routing
 app.use(routes.home, globalRouter);
