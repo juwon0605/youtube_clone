@@ -1,3 +1,5 @@
+import routes from "../routes";
+
 // globalRouter
 // render()가 view engine 확장자의 파일명(.pug) "join"을 탐색
 // render(, second : 찾은 파일(객체)에 전달할 파라미터)
@@ -19,9 +21,17 @@ export const postJoin = (req, res) => {
         // 원래는 user로 로그인 되어야함. 일단 임시로 /home
         res.redirect(routes.home);
     }
-}
-export const login = (req, res) => res.render("login", {pageTitle: "Login"});
-export const logout = (req, res) => res.render("logout", {pageTitle: "Logout"});
+};
+export const getLogin = (req, res) => res.render("login", {pageTitle: "Login"});
+export const postLogin = (req, res) => {
+    res.redirect(routes.home);
+};
+
+export const logout = (req, res) => {
+    // To Do: Process Log Out
+    // 나중에 로그아웃 기능 구현하기
+    res.redirect(routes.home);
+};
 
 // userRouter
 export const users = (req, res) => res.render("users", {pageTitle: "Users"});

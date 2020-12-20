@@ -1,4 +1,5 @@
 import {videos} from "../db"
+import routes from "../routes"
 
 // globalRouter
 // render()가 view engine 확장자의 파일명(.pug) "home"을 탐색
@@ -18,7 +19,23 @@ export const search = (req, res) => {
 
 // videoRouter
 // export const videos = (req, res) => res.render("videos", {pageTitle: "Videos"});
-export const upload = (req, res) => res.render("upload", {pageTitle: "Upload"});
-export const videoDetail = (req, res) => res.render("videoDetail", {pageTitle: "Video Detail"});
+export const getUpload = (req, res) => {
+    res.render("upload", {pageTitle: "Upload"});
+};
+export const postUpload = (req, res) => {
+    // To Do: Upload and save video
+    // DB 연결 이후에 비디오 업로드하는 기능 구현
+    const {
+        body: {
+            file,
+            title,
+            description
+        }
+    } = req;
+    res.redirect(routes.videoDetail(1));
+};
+export const videoDetail = (req, res) => {
+    res.render("videoDetail", {pageTitle: "Video Detail"});
+};
 export const editVideo = (req, res) => res.render("editVideo", {pageTitle: "Edit Video"});
 export const deleteVideo = (req, res) => res.render("deleteVideo", {pageTitle: "Delete Video"});

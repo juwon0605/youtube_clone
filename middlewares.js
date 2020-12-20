@@ -6,5 +6,9 @@ export const localsMiddleware = (req, res, next) => {
     // main.pug의 title에 #{siteName} 같이 사용함.
     res.locals.siteName = "Youtube";
     res.locals.routes = routes; // routes.js을 export default 해놓음.
+    res.locals.user = {
+        isAuthenticated: true,
+        id: 1
+    };
     next();
 };
