@@ -1,14 +1,21 @@
-import {videos} from "../db"
 import routes from "../routes"
+import Video from "../models/Video";
 
 // globalRouter
 // render()가 view engine 확장자의 파일명(.pug) "home"을 탐색
 // render(, second : 찾은 파일(객체)에 전달할 파라미터)
 // home.pug에서 전달받은 파라미터를 #{pageTitle} 같이 사용할 수 있음
 // page별로 같은 곳에 다른 변수를 사용해야할 경우, 이와같이 동일한 변수에 다른 value를 담아 전달
-export const home = (req, res) => {
-    res.render("home", {pageTitle: "Home", videos});
-}
+export const home = async (req, res) => {                   // async -> 함수가 return할때까지 대기 
+  try {                                                     // async -> await로 대기할 부분 명시
+    const videos = await Video.find({}).sort({ _id: -1 });  // "Video" model로 mongoDB에서 data들을 찾아옴
+    res.render("home", { pageTitle: "Home", videos });      // mongoDB에서 찾아온 data들을 객체로 rendering할때 넘겨줌
+  } catch (error) {
+    console.log(error);
+    res.render("home", { pageTitle: "Home", videos: [] });  // mongoDB에서 data들을 가져올때 error가 발생하면
+  }                                                         // render의 정상 실행을 위해 빈 배열을 전달
+};
+
 export const search = (req, res) => {
     // const searchingBy = req.query.term;
     // {searchingBy: searchingBy}
@@ -22,20 +29,24 @@ export const search = (req, res) => {
 export const getUpload = (req, res) => {
     res.render("upload", {pageTitle: "Upload"});
 };
-export const postUpload = (req, res) => {
-    // To Do: Upload and save video
-    // DB 연결 이후에 비디오 업로드하는 기능 구현
-    const {
-        body: {
-            file,
-            title,
-            description
-        }
-    } = req;
-    res.redirect(routes.videoDetail(1));
+
+export const postUpload = async (req, res) => {
+  const {                                           // redering과정: router->controller->multer(video->URL)->postUpload
+      body: { title, description },
+      file: { path }
+  } = req;
+  const newVideo = await Video.create({             // mongoDB Video table에 새로운 data insert
+      fileUrl: path,                                // multer -> URL -> fileUrl: path
+      title,                                        // multer -> title
+      description                                   // multer -> dexcription
+    });
+    res.redirect(routes.videoDetail(newVideo.id));  // 새로 업로드한 비디오 페이지로 rediret
 };
+
 export const videoDetail = (req, res) => {
     res.render("videoDetail", {pageTitle: "Video Detail"});
 };
+
 export const editVideo = (req, res) => res.render("editVideo", {pageTitle: "Edit Video"});
+
 export const deleteVideo = (req, res) => res.render("deleteVideo", {pageTitle: "Delete Video"});
