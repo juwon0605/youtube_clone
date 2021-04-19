@@ -1,4 +1,11 @@
 extends layouts/main
 
 block content
-     p videoDetail
+     .video__player
+          video(src=`/${video.fileUrl}`)
+                    //- 아직은 static하게 video file을 가져옴으로 "/"를 붙여줘야함
+     .video__info
+          a(href=routes.editVideo) Edit Video
+          h5.video__title=video.title
+          span.video__views=video.views
+          p.video__description=video.description 

@@ -36,15 +36,23 @@ export const postUpload = async (req, res) => {
       file: { path }
   } = req;
   const newVideo = await Video.create({             // mongoDB Video table에 새로운 data insert
-      fileUrl: path,                                // multer -> URL -> fileUrl: path
-      title,                                        // multer -> title
-      description                                   // multer -> dexcription
+      fileUrl: path,                                // controller -> multer -> URL -> fileUrl: path
+      title,                                        // controller ->                  title
+      description                                   // controller ->                  dexcription
     });
     res.redirect(routes.videoDetail(newVideo.id));  // 새로 업로드한 비디오 페이지로 rediret
 };
 
-export const videoDetail = (req, res) => {
-    res.render("videoDetail", {pageTitle: "Video Detail"});
+export const videoDetail = async (req, res) => {
+   const {
+     params: {id}
+   } = req;
+   try{
+     const video = await Video.findById(id);
+     res.render("videoDetail", {pageTitle: "Video Detail", video}); // video == video: video
+   } catch(error) {
+     res.redirect(routes.home);
+   }
 };
 
 export const editVideo = (req, res) => res.render("editVideo", {pageTitle: "Edit Video"});

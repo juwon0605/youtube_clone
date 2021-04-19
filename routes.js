@@ -16,7 +16,8 @@ const CHANGE_PASSWORD = "/change-password";
 // Videos
 const VIDEOS = "/videos";
 const UPLOAD = "/upload";
-const VIDEO_DETAIL = "/:id";
+const VIDEO_DETAIL = "/:id";    // URL에서 ~/"해당부분"/~을 :"id"라는 변수로 인식함
+                                // URL -> 변수 인식
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
