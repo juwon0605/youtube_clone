@@ -1,7 +1,7 @@
 import multer from "multer";    // multer middleware: 전송받은 영상파일을 URL로 전환해서 반환
 import routes from "./routes";
 
-const multerVideo = multer({dest: "videos/"});  // multer에서(로) 전송(할)받을 URL destination 설정
+const multerVideo = multer({dest: "uploads/videos/"});  // multer에서(로) 전송(할)받을 URL destination 설정
 
 export const localsMiddleware = (req, res, next) => {
     // local(탬플릿-pug)에 global변수(최상위 파일-app 등)를 사용하도록 만들어주는 함수

@@ -38,7 +38,10 @@ app.use(function(req, res, next) {
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);   // userRouter 객체 전부를 use한다는 의미
 app.use(routes.videos, videoRouter);
-
+// middleware
+app.use("/uploads", express.static("uploads"))   // "uploads" directory로 연결 
+                                                 // 나중에 Amazon S3 server로 연결할 예정
+                                                 // 일단 백엔드 서버에 video file, user data를 저장하고 static하게 연결
 export default app; // export default -> import {}(x) name(o)
 
 // ---------------------------------------------------------------------------------------
