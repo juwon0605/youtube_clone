@@ -45,16 +45,41 @@ export const postUpload = async (req, res) => {
 
 export const videoDetail = async (req, res) => {
    const {
-     params: {id}
+     params: {id}                             // URL에 있는 id 추출
    } = req;
    try{
-     const video = await Video.findById(id);
+     const video = await Video.findById(id);  // URL -> id -> mongoDB -> render(videoDetail)
      res.render("videoDetail", {pageTitle: "Video Detail", video}); // video == video: video
    } catch(error) {
      res.redirect(routes.home);
    }
 };
 
-export const editVideo = (req, res) => res.render("editVideo", {pageTitle: "Edit Video"});
+export const getEditVideo = async (req, res) => {
+  const {
+    params: {id}                             // URL에 있는 id 추출
+  } = req;
+  try {
+    const video = await Video.findById(id);  // URL -> id -> mongoDB -> render(editVideo)
+    res.render("editVideo", {pageTitle: `Edit ${video.title}`, video});
+  } catch(error) {
+    res.redirect(routes.home);
+  }
+};
+
+export const postEditVideo = async (req, res) => {
+  const {
+    params: {id},
+    body: {title, dexcription}
+  } = req;
+  try{
+    await Video.findOneAndUpdate({id}, {title, dexcription}); // id == id: id
+    res.redirect(routes.videoDetail(id));
+  } catch(error) {
+    res.redirect(routes.home);
+  }
+};
+
+
 
 export const deleteVideo = (req, res) => res.render("deleteVideo", {pageTitle: "Delete Video"});
