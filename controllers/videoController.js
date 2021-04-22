@@ -49,7 +49,7 @@ export const videoDetail = async (req, res) => {
    } = req;
    try{
      const video = await Video.findById(id);  // URL -> id -> mongoDB -> render(videoDetail)
-     res.render("videoDetail", {pageTitle: "Video Detail", video}); // video == video: video
+     res.render("videoDetail", {pageTitle: video.title, video}); // video == video: video
    } catch(error) {
      res.redirect(routes.home);
    }
@@ -70,10 +70,10 @@ export const getEditVideo = async (req, res) => {
 export const postEditVideo = async (req, res) => {
   const {
     params: {id},
-    body: {title, dexcription}
+    body: {title, description}
   } = req;
-  try{
-    await Video.findOneAndUpdate({id}, {title, dexcription}); // id == id: id
+  try{                                                             // mongoDB에서 model의 id는 _id로 정의되어 있음
+    await Video.findOneAndUpdate({_id: id}, {title, description}); // title == title: title (.pug의 객체들의 name)
     res.redirect(routes.videoDetail(id));
   } catch(error) {
     res.redirect(routes.home);
@@ -81,5 +81,13 @@ export const postEditVideo = async (req, res) => {
 };
 
 
-
-export const deleteVideo = (req, res) => res.render("deleteVideo", {pageTitle: "Delete Video"});
+export const deleteVideo = async (req, res) => {
+  const {
+    params: {id}
+  } = req;
+  try {
+    await Video.findOneAndRemove({_id: id});
+  } catch(error) {
+  }
+  res.redirect(routes.home);
+};

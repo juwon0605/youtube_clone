@@ -31,11 +31,11 @@ const routes = {
     search: SEARCH,
     //userRouter
     users: USERS,
-    userDetail: (id) => {
+    userDetail: (id) => {                   // 파라미터가 있을때(프론트에 URL을 세팅해줄때)는 Full URL return 
         if(id) {
             return `/users/${id}`;  
         } else {
-            return USER_DETAIL;
+            return USER_DETAIL;             // 파라미터가 없을때(rendering하는 중 일때)는 다음 단계 URL(단지 string) return
         }
     },
     editProfile: EDIT_PROFILE,
@@ -43,21 +43,27 @@ const routes = {
     //videoRouter
     videos: VIDEOS,
     upload: UPLOAD,
-    videoDetail: (id) => {
+    videoDetail: (id) => {                  // 파라미터가 있을때(프론트에 URL을 세팅해줄때)는 Full URL return 
         if(id){
             return `/videos/${id}`;
         } else {
-            return VIDEO_DETAIL;
+            return VIDEO_DETAIL;            // 파라미터가 없을때(rendering하는 중 일때)는 다음 단계 URL(단지 string) return
         }
     },
-    editVideo: (id) => {
+    editVideo: (id) => {                    // 파라미터가 있을때(프론트에 URL을 세팅해줄때)는 Full URL return 
         if(id){
             return `/videos/${id}/edit`;
         }else {
-            return EDIT_VIDEO;
+            return EDIT_VIDEO;              // 파라미터가 없을때(rendering하는 중 일때)는 다음 단계 URL(단지 string) return
         }
     },
-    deleteVideo: DELETE_VIDEO
+    deleteVideo: (id) => {                  // 파라미터가 있을때(프론트에 URL을 세팅해줄때)는 Full URL return 
+        if(id) {
+            return `/videos/${id}/delete`;
+        }else{
+            return DELETE_VIDEO;            // 파라미터가 없을때(rendering하는 중 일때)는 다음 단계 URL(단지 string) return
+        }
+    }
 };
 
 export default routes;
